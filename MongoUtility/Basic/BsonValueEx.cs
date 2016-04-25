@@ -38,6 +38,11 @@ namespace MongoUtility.Basic
         public string MBsonType;
 
         /// <summary>
+        /// 浮点类型
+        /// </summary>
+        public double MBsonDouble;
+
+        /// <summary>
         ///     为了序列化，必须要写这个方法
         /// </summary>
         public BsonValueEx()
@@ -70,6 +75,11 @@ namespace MongoUtility.Basic
                 MBsonType = "BsonBoolean";
                 MBsonBoolean = value.AsBoolean;
             }
+            if (value.IsDouble)
+            {
+                MBsonType = "BsonDouble";
+                MBsonDouble = value.AsDouble;
+            }
         }
 
         /// <summary>
@@ -84,6 +94,7 @@ namespace MongoUtility.Basic
             typelst.Add("BsonBoolean");
             typelst.Add("BsonArray");
             typelst.Add("BsonDocument");
+            typelst.Add("BsonDouble");
             return typelst;
         }
 
@@ -107,6 +118,9 @@ namespace MongoUtility.Basic
                     break;
                 case "BsonBoolean":
                     value = MBsonBoolean ? BsonBoolean.True : BsonBoolean.False;
+                    break;
+                case "BsonDouble":
+                    value = new BsonDouble(MBsonDouble);
                     break;
             }
             return value;
