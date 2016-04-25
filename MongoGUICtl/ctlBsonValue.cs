@@ -80,6 +80,9 @@ namespace MongoGUICtl
                 case 5:
                     mValue = _mBsonDocument;
                     break;
+                case 6:
+                    mValue = new BsonDouble(Convert.ToDouble(NumberPick.Text));
+                    break;
             }
             return mValue;
         }
@@ -154,6 +157,13 @@ namespace MongoGUICtl
                     cmbDataType.SelectedIndex = 5;
                 }
             }
+            if (value.IsDouble)
+            {
+                cmbDataType.SelectedIndex = 6;
+                NumberPick.DecimalPlaces = 2;
+                NumberPick.Visible = true;
+                NumberPick.Text = value.AsDouble.ToString();
+            }
         }
 
         /// <summary>
@@ -184,6 +194,9 @@ namespace MongoGUICtl
                     break;
                 case 5:
                     SetValue(new BsonDocument());
+                    break;
+                case 6:
+                    SetValue(new BsonDouble(0));
                     break;
                 default:
                     break;
